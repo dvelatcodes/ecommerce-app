@@ -42,6 +42,18 @@ export const StateContext = ({ children }) => {
     }
     toast.success(`${qty} ${product.name} added to the cart.`);
   };
+  // function to remove product from cart
+  const onRemove = (product) => {
+    const foundProduct = cartItems.find((item) => item._id === product._id);
+    const newCartItem = cartItems.filter((item) => item._id !== product._id);
+    setTotalPrice(
+      (prevTotalPrice) => prevTotalPrice - product.price * foundProduct.quantity
+    );
+    setTotalQuantities(
+      (prevTotalQuantity) => prevTotalQuantity - foundProduct.quantity
+    );
+    setCartItems(newCartItem);
+  };
   // unassigned values to contain product to be reduced/increased on the cart page
   let index;
   let foundProduct;
@@ -81,6 +93,7 @@ export const StateContext = ({ children }) => {
         onAdd,
         setShowCart,
         toggleCartItemQuantity,
+        onRemove,
       }}
     >
       {children}
