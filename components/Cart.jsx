@@ -24,14 +24,14 @@ const Cart = () => {
   } = useStateContext();
   const handleCheckout = async () => {
     const stripe = await getStripe();
-
-    const response = await fetch("api/stripe", {
+    // console.log(cartItems, "here");
+    const response = await fetch("/api/stripe", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(cartItems),
+      body: JSON.stringify({ cartItems: cartItems }),
     });
 
-    if (response.statusCodes === 500) return;
+    if (response.statusCode === 500) return;
 
     const data = await response.json();
     toast.loading("Redirecting...");
@@ -128,7 +128,7 @@ const Cart = () => {
               <h3>${totalPrice}</h3>
             </div>
             <div className="btn-container">
-              <button type="button" className="btn" onClick={() => {}}>
+              <button type="button" className="btn" onClick={handleCheckout}>
                 pay with stripe
               </button>
             </div>
