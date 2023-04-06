@@ -24,7 +24,6 @@ const Cart = () => {
   } = useStateContext();
   const handleCheckout = async () => {
     const stripe = await getStripe();
-    // console.log(cartItems, "here");
     const response = await fetch("/api/stripe", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
